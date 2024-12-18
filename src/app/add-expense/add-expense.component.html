@@ -1,0 +1,114 @@
+<div class="expense-container">
+  <h2>Añadir Gasto</h2>
+
+  <form (ngSubmit)="onSubmit()" class="expense-form">
+    <div class="form-group">
+      <label for="amount">Monto:</label>
+      <input
+        type="number"
+        id="amount"
+        name="amount"
+        [(ngModel)]="expense.amount"
+        required
+        class="form-control"
+        placeholder="Ingresa el monto del gasto"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="category">Categoría:</label>
+      <select
+        id="category"
+        name="category"
+        [(ngModel)]="expense.category"
+        required
+        class="form-control"
+      >
+        <option value="" disabled selected>Selecciona una categoría</option>
+        <option value="salud">Salud</option>
+        <option value="ocio">Ocio</option>
+        <option value="casa">Casa</option>
+        <option value="educacion">Educación</option>
+        <option value="regalos">Regalos</option>
+        <option value="alimentacion">Alimentación</option>
+        <option value="ejercicio">Ejercicio</option>
+        <option value="otros">Otros</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Descripción:</label>
+      <textarea
+        id="description"
+        name="description"
+        [(ngModel)]="expense.description"
+        required
+        class="form-control"
+        rows="4"
+        placeholder="Ingresa una descripción para el gasto"
+      ></textarea>
+    </div>
+
+    <!-- Nuevo campo para seleccionar la fecha -->
+    <div class="form-group">
+      <label for="date">Fecha:</label>
+      <input
+        type="date"
+        id="date"
+        name="date"
+        [(ngModel)]="expense.date"
+        required
+        class="form-control"
+      />
+    </div>
+
+    <button
+      type="submit"
+      class="submit-btn"
+      [disabled]="!expense.amount || !expense.category || !expense.description || !expense.date"
+    >
+      Añadir Gasto
+    </button>
+  </form>
+</div>
+
+<!-- Nuevo campo para filtrar por fecha -->
+<div class="filter-container">
+  <h3>Filtrar gastos por día</h3>
+  <div class="form-group">
+    <label for="filterDate">Seleccionar fecha:</label>
+    <input type="date" id="filterDate" (change)="onDateChange($event)" class="form-control" />
+  </div>
+</div>
+
+<!-- Gráfica de Pie -->
+<div class="chart-container">
+  <h3>Distribución de los Gastos del Día Seleccionado</h3>
+  <div style="display: block;">
+    <canvas baseChart
+      [data]="chartData"
+      [options]="chartOptions"
+      [type]="'pie'"
+    ></canvas>
+  </div> 
+</div>
+
+<!-- Resumen de Gastos -->
+<div *ngIf="dailyExpensesSummary.length > 0">
+  <h3>Gastos del {{ selectedDate }}</h3>
+  <ul>
+    <li *ngFor="let summary of dailyExpensesSummary">
+      <button (click)="toggleCategoryDetails(summary.category)">
+        {{ summary.category | titlecase }}: ${{ summary.total.toFixed(2) }}
+      </button>
+      <!-- Mostrar los gastos si se ha hecho clic en la categoría -->
+      <ul *ngIf="selectedCategory === summary.category">
+        <li *ngFor="let expense of getExpensesByCategory(summary.category)">
+          {{ expense.description }} - ${{ expense.amount }} ({{ expense.date }})
+          <!-- Botón para eliminar el gasto -->
+          <button (click)="removeExpense(expense)" class="remove-btn">Eliminar</button>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
