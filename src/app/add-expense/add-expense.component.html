@@ -100,7 +100,7 @@
 </div>
 
 <!-- Resumen de Gastos -->
-<div *ngIf="dailyExpensesSummary.length > 0">
+<div *ngIf="dailyExpensesSummary.length > 0" class="expenses-summary">
   <h3>Gastos del {{ selectedDate }}</h3>
   <ul>
     <li *ngFor="let summary of dailyExpensesSummary">
