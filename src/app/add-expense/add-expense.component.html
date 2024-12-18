@@ -61,7 +61,7 @@
         [(ngModel)]="expense.date"
         required
         class="form-control"
-        [value]="today"
+        [value]="getTodayDate()"
       />
     </div>
 
@@ -80,7 +80,7 @@
   <h3>Filtrar gastos por día</h3>
   <div class="form-group">
     <label for="filterDate">Seleccionar fecha:</label>
-    <input type="date" id="filterDate" (change)="onDateChange($event)" class="form-control" />
+    <input type="date" id="filterDate" (change)="onDateChange($event)" class="form-control" [value]="getTodayDate()"/>
   </div>
 </div>
 
