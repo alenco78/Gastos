@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Importar CommonModule
 import { FormsModule } from '@angular/forms'; // Importar FormsModule
 import { Chart, ChartData, ChartOptions } from 'chart.js'; // Importar ChartData y ChartOptions
@@ -10,13 +10,15 @@ import { NgChartsModule } from 'ng2-charts'; // Importar NgChartsModule
   imports: [CommonModule, FormsModule, NgChartsModule],
   styleUrls: ['./add-expense.component.scss'],
 })
-export class AddExpenseComponent {
-  expense = {
-    amount: null,
-    category: '',
-    description: '',
-    date: this.getTodayDate(), // Inicializar la fecha con la fecha de hoy
-  };
+export class AddExpenseComponent implements OnInit {
+  expense: any = {};
+  today: string = '';
+
+  ngOnInit() {
+    const todayDate = new Date();
+    this.today = todayDate.toISOString().split('T')[0];
+    this.loadFromLocalStorage(); // Cargar los datos al inicializar el componente
+  }
 
   expenses: any[] = []; // Lista para almacenar todos los gastos
   selectedDate: string = this.getTodayDate(); // Inicializar la fecha de filtrado con la fecha de hoy
@@ -46,7 +48,7 @@ export class AddExpenseComponent {
             return `${context.label}: $${value.toFixed(2)}`;
           }
         }
-      }      
+      }
     }
   };
 
@@ -159,9 +161,5 @@ export class AddExpenseComponent {
     // Filtrar los gastos para eliminar el que coincide con el gasto a eliminar
     this.expenses = this.expenses.filter(expense => expense !== expenseToRemove);
     this.updateChartData(); // Actualizar los datos de la gráfica después de eliminar el gasto
-  }
-
-  ngOnInit() {
-    this.loadFromLocalStorage(); // Cargar los datos al inicializar el componente
   }
 }

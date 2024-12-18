@@ -25,14 +25,16 @@
         class="form-control"
       >
         <option value="" disabled selected>Selecciona una categoría</option>
-        <option value="salud">Salud</option>
-        <option value="ocio">Ocio</option>
+        <option value="alimentacion">Alimentación</option>
         <option value="casa">Casa</option>
         <option value="educacion">Educación</option>
-        <option value="regalos">Regalos</option>
-        <option value="alimentacion">Alimentación</option>
         <option value="ejercicio">Ejercicio</option>
+        <option value="familia">Familia</option>
+        <option value="ocio">Ocio</option>
         <option value="otros">Otros</option>
+        <option value="regalos">Regalos</option>
+        <option value="salud">Salud</option>
+        <option value="transporte">Transporte</option>
       </select>
     </div>
 
@@ -59,6 +61,7 @@
         [(ngModel)]="expense.date"
         required
         class="form-control"
+        [value]="today"
       />
     </div>
 
