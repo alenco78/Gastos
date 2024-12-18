@@ -92,4 +92,15 @@
   .remove-btn:hover {
     background-color: #ff1a1a; /* Un rojo más oscuro al pasar el ratón */
   }
-  
+
+  .chart-container {
+    max-width: 500px; // Ancho máximo del contenedor
+    margin: 20px auto; // Centrar horizontalmente
+    padding: 15px;
+    
+    canvas {
+      width: 100% !important; // Asegura que el canvas tome el ancho del contenedor
+      height: auto !important; // Mantiene la proporción de aspecto
+      max-height: 500px; // Altura máxima del canvas
+    }
+  }
