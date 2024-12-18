@@ -75,12 +75,15 @@
   </form>
 </div>
 
-<!-- Nuevo campo para filtrar por fecha -->
-<div class="filter-container">
-  <h3>Filtrar gastos por día</h3>
-  <div class="form-group">
-    <label for="filterDate">Seleccionar fecha:</label>
-    <input type="date" id="filterDate" (change)="onDateChange($event)" class="form-control" [value]="getTodayDate()"/>
+<!-- Wrap filter content in div with new class -->
+<div class="filter-section">
+  <!-- Nuevo campo para filtrar por fecha -->
+  <div class="filter-container">
+    <h3>Filtrar gastos por día</h3>
+    <div class="form-group">
+      <label for="filterDate">Seleccionar fecha:</label>
+      <input type="date" id="filterDate" (change)="onDateChange($event)" class="form-control" [value]="getTodayDate()"/>
+    </div>
   </div>
 </div>
 
