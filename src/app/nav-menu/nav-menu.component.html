@@ -1,0 +1,10 @@
+<nav class="navbar">
+  <div class="nav-items" [class.open]="isMenuOpen">
+    <a routerLink="/" routerLinkActive="active">Home</a>
+    <a routerLink="/weekly" routerLinkActive="active">Weekly Expenses</a>
+    <a routerLink="/total" routerLinkActive="active">Total Expenses</a>
+  </div>
+  <button class="menu-toggle" (click)="toggleMenu()">
+    <span class="hamburger"></span>
+  </button>
+</nav>

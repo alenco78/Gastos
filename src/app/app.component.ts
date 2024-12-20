@@ -1,13 +1,17 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { AddExpenseComponent } from './add-expense/add-expense.component';
+import { NavMenuComponent } from './nav-menu/nav-menu.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, AddExpenseComponent],
+  standalone: true,
+  imports: [
+    RouterOutlet,
+    NavMenuComponent
+  ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'todolist2';
+  title = 'Gastos';
 }
