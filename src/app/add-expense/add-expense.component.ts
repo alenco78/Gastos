@@ -26,7 +26,7 @@ export class AddExpenseComponent implements OnInit {
   selectedCategory: string | null = null; // Para rastrear la categoría seleccionada
 
   chartData: ChartData<'pie'> = {
-    labels: ['Salud', 'Ocio', 'Casa', 'Educación', 'Regalos', 'Alimentación', 'Ejercicio', 'Otros'],
+    labels: ['Alimentación', 'Casa', 'Educación', 'Ejercicio', 'Familia', 'Ocio', 'Otros', 'Regalos', 'Salud', 'Transporte'],
     datasets: [
       {
         data: [0, 0, 0, 0, 0, 0, 0, 0],
@@ -95,19 +95,20 @@ export class AddExpenseComponent implements OnInit {
   }
 
   updateChartData() {
-    if (!this.selectedDate) return;
 
     const newData = [0, 0, 0, 0, 0, 0, 0, 0];
     const filteredExpenses = this.expenses.filter(expense => expense.date === this.selectedDate);
     const categoryTotals: { [key: string]: number } = {
-      salud: 0,
-      ocio: 0,
+      alimentacion: 0,
       casa: 0,
       educacion: 0,
-      regalos: 0,
-      alimentacion: 0,
       ejercicio: 0,
+      familia: 0,
+      ocio: 0,
       otros: 0,
+      regalos: 0,
+      salud: 0,
+      transporte: 0,
     };
 
     // Actualizar los datos de la gráfica y del resumen
@@ -137,7 +138,7 @@ export class AddExpenseComponent implements OnInit {
   }
 
   getCategoryIndex(category: string): number {
-    const categories = ['salud', 'ocio', 'casa', 'educacion', 'regalos', 'alimentacion', 'ejercicio', 'otros'];
+    const categories = ['alimentacion', 'casa', 'educacion', 'ejercicio','familia', 'ocio', 'otros', 'regalos', 'salud', 'transporte'];
     return categories.indexOf(category);
   }
 
@@ -158,8 +159,18 @@ export class AddExpenseComponent implements OnInit {
   }
 
   removeExpense(expenseToRemove: any) {
-    // Filtrar los gastos para eliminar el que coincide con el gasto a eliminar
+    // Remove from component array
     this.expenses = this.expenses.filter(expense => expense !== expenseToRemove);
-    this.updateChartData(); // Actualizar los datos de la gráfica después de eliminar el gasto
+    
+    // Update localStorage
+    const storedExpenses = JSON.parse(localStorage.getItem('expenses') || '[]');
+    const updatedStoredExpenses = storedExpenses.filter((expense: any) => 
+      expense.description !== expenseToRemove.description && 
+      expense.amount !== expenseToRemove.amount
+    );
+    localStorage.setItem('expenses', JSON.stringify(updatedStoredExpenses));
+    
+    // Update chart
+    this.updateChartData();
   }
 }
